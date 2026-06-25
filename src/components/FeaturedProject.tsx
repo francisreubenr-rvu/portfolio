@@ -6,11 +6,11 @@ import { Badge } from "@/components/ui/badge";
 import type { Project } from "@/data/projects";
 
 const domainColors: Record<string, string> = {
-  "ml-ai":    "oklch(0.40 0.14 285)",   /* deep indigo-violet */
-  security:   "oklch(0.48 0.18 28)",    /* deep vermillion */
-  systems:    "oklch(0.52 0.13 50)",    /* deep sienna-amber */
-  fullstack:  "oklch(0.44 0.11 148)",   /* deep forest green */
-  research:   "oklch(0.50 0.12 80)",    /* deep ochre */
+  "ml-ai":    "#4733a8",   /* deep indigo-violet */
+  security:   "#a83218",   /* deep vermillion */
+  systems:    "#8a5a14",   /* deep sienna-amber */
+  fullstack:  "#1f6b3f",   /* deep forest green */
+  research:   "#856411",   /* deep ochre */
 };
 
 interface Props {
@@ -31,14 +31,9 @@ export default function FeaturedProject({ project, index }: Props) {
       style={{
         background: "var(--surface)",
         border: "1px solid var(--border-default)",
+        borderLeft: `3px solid ${accentColor}`,
       }}
     >
-      {/* Color band */}
-      <div
-        className="h-1 w-full transition-all duration-300 group-hover:h-1.5"
-        style={{ background: accentColor }}
-      />
-
       <div className="p-6 md:p-8">
         <div className="flex items-start justify-between gap-4 mb-4">
           <div>
@@ -49,11 +44,12 @@ export default function FeaturedProject({ project, index }: Props) {
               {project.domains.join(" · ")}
             </p>
             <h3
-              className="font-heading font-bold text-2xl md:text-3xl tracking-tight"
+              className="font-heading font-bold text-2xl md:text-3xl tracking-tight mb-2"
               style={{ color: "var(--text-primary)" }}
             >
               {project.name}
             </h3>
+            <div className="h-px w-12" style={{ background: accentColor }} />
           </div>
 
           <div className="flex gap-2 shrink-0 mt-1">

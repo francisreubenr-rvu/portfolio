@@ -6,11 +6,11 @@ import { Badge } from "@/components/ui/badge";
 import type { Project } from "@/data/projects";
 
 const domainColors: Record<string, string> = {
-  "ml-ai":    "oklch(0.40 0.14 285)",
-  security:   "oklch(0.48 0.18 28)",
-  systems:    "oklch(0.52 0.13 50)",
-  fullstack:  "oklch(0.44 0.11 148)",
-  research:   "oklch(0.50 0.12 80)",
+  "ml-ai":    "#4733a8",
+  security:   "#a83218",
+  systems:    "#8a5a14",
+  fullstack:  "#1f6b3f",
+  research:   "#856411",
 };
 
 interface Props {
@@ -31,6 +31,7 @@ export default function ProjectCard({ project, index }: Props) {
       style={{
         background: "var(--surface)",
         border: "1px solid var(--border-subtle)",
+        borderLeft: `3px solid ${accentColor}`,
       }}
     >
       <div className="flex items-start justify-between gap-3 mb-3">

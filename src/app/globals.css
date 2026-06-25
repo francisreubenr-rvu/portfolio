@@ -113,7 +113,7 @@
 @layer utilities {
   .display-xl {
     font-family: var(--font-heading);
-    font-size: clamp(64px, 10vw, 140px);
+    font-size: clamp(40px, 11vw, 140px);
     font-weight: 800;
     line-height: 0.9;
     letter-spacing: -0.04em;

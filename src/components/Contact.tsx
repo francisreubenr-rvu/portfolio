@@ -31,14 +31,15 @@ export default function Contact() {
 
             <a
               href="mailto:francisreubenrbtech25@rvu.edu.in"
-              className="inline-flex items-center gap-2.5 px-6 py-3 text-sm font-medium rounded-lg transition-all duration-200 hover:opacity-90"
+              className="inline-flex items-center gap-2.5 px-5 py-3 text-sm font-medium rounded-lg transition-all duration-200 hover:opacity-90"
               style={{
                 background: "var(--cyan)",
-                color: "#080808",
+                color: "#faf8f3",
               }}
             >
-              <Mail size={15} />
-              francisreubenrbtech25@rvu.edu.in
+              <Mail size={15} className="shrink-0" />
+              <span className="hidden sm:inline">francisreubenrbtech25@rvu.edu.in</span>
+              <span className="sm:hidden">Send an email</span>
             </a>
           </div>
 

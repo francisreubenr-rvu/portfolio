@@ -65,7 +65,7 @@ export default function Hero() {
           {/* Domain strip */}
           <motion.p
             variants={fadeUp}
-            className="text-base font-medium mb-10"
+            className="text-base font-medium mb-10 leading-relaxed"
             style={{ color: "var(--ink-mid)" }}
           >
             {domains}
@@ -94,7 +94,8 @@ export default function Hero() {
               className="font-medium text-sm transition-colors duration-150"
               style={{ color: "var(--ink-mid)" }}
             >
-              francisreubenrbtech25@rvu.edu.in
+              <span className="hidden sm:inline">francisreubenrbtech25@rvu.edu.in</span>
+              <span className="sm:hidden">Get in touch →</span>
             </a>
           </motion.div>
         </motion.div>
