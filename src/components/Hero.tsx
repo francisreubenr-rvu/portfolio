@@ -1,122 +1,100 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
 
-const stats = [
+const facts = [
   { value: "9.7", label: "SGPA" },
-  { value: "97%", label: "ISC Board" },
+  { value: "97.0%", label: "ISC Board" },
   { value: "22+", label: "Projects" },
   { value: "3×", label: "Natl. Champion" },
 ];
 
-const domains = [
-  "Full-Stack Web",
-  "AI / ML Systems",
-  "Embedded & IoT",
-  "Cybersecurity",
-];
+const domains = "Full-Stack · AI / ML · Embedded & IoT · Cybersecurity";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0 },
 };
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-end pb-16 md:pb-24 hero-grid overflow-hidden">
-      {/* Radial glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 50% at 20% 60%, rgba(34,211,238,0.04) 0%, transparent 70%)",
-        }}
-      />
-
+    <section className="relative min-h-screen flex flex-col justify-end pb-20 md:pb-28 hero-grid overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-6 md:px-10 w-full pt-32">
         <motion.div
           initial="hidden"
           animate="show"
-          variants={{ show: { transition: { staggerChildren: 0.08 } } }}
+          variants={{ show: { transition: { staggerChildren: 0.09 } } }}
         >
-          {/* Label */}
-          <motion.p variants={fadeUp} className="label-mono-accent mb-8">
+          {/* Location label */}
+          <motion.p variants={fadeUp} className="label-mono-accent mb-10">
             1st Year · RV University · Bengaluru
           </motion.p>
 
           {/* Name */}
-          <motion.h1 variants={fadeUp} className="display-xl mb-6">
-            <span style={{ color: "var(--text-primary)" }}>FRANCIS</span>
+          <motion.h1 variants={fadeUp} className="display-xl mb-8">
+            <span style={{ color: "var(--ink)" }}>FRANCIS</span>
             <br />
-            <span style={{ color: "var(--text-primary)" }}>REUBEN</span>
-            <span style={{ color: "var(--cyan)" }}>.</span>
+            <span style={{ color: "var(--ink)" }}>REUBEN</span>
+            <span style={{ color: "var(--accent)" }}>.</span>
           </motion.h1>
 
-          {/* Descriptor row */}
-          <motion.div
+          {/* Thin rule */}
+          <motion.hr
             variants={fadeUp}
-            className="flex flex-wrap gap-x-6 gap-y-2 mb-12"
-          >
-            {domains.map((d) => (
-              <span
-                key={d}
-                className="text-base md:text-lg font-medium"
-                style={{ color: "var(--text-secondary)" }}
-              >
-                {d}
-              </span>
-            ))}
-          </motion.div>
+            className="hr-ink mb-7"
+          />
 
-          {/* Stats row */}
+          {/* Facts strip — editorial, not SaaS metric boxes */}
           <motion.div
             variants={fadeUp}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 max-w-2xl"
+            className="grid grid-cols-2 md:grid-cols-4 gap-y-4 mb-10"
           >
-            {stats.map((s) => (
-              <div
-                key={s.label}
-                className="rounded-lg p-4"
-                style={{
-                  background: "var(--surface)",
-                  border: "1px solid var(--border-default)",
-                }}
-              >
+            {facts.map((f) => (
+              <div key={f.label}>
                 <div
-                  className="font-heading font-extrabold text-3xl tracking-tight mb-0.5"
-                  style={{ color: "var(--cyan)" }}
+                  className="font-heading font-bold text-2xl tracking-tight mb-0.5"
+                  style={{ color: "var(--ink)" }}
                 >
-                  {s.value}
+                  {f.value}
                 </div>
-                <div className="label-mono">{s.label}</div>
+                <div className="label-mono">{f.label}</div>
               </div>
             ))}
           </motion.div>
 
-          {/* CTA */}
-          <motion.div variants={fadeUp} className="flex items-center gap-4">
+          {/* Domain strip */}
+          <motion.p
+            variants={fadeUp}
+            className="text-base font-medium mb-10"
+            style={{ color: "var(--ink-mid)" }}
+          >
+            {domains}
+          </motion.p>
+
+          {/* CTAs — text links, not pill buttons */}
+          <motion.div
+            variants={fadeUp}
+            className="flex items-center gap-6 flex-wrap"
+          >
             <a
               href="#work"
-              className="flex items-center gap-2 px-6 py-3 font-medium text-sm rounded-lg transition-all duration-200 hover:gap-3"
-              style={{
-                background: "var(--cyan)",
-                color: "#080808",
-              }}
+              className="font-medium text-sm group flex items-center gap-1.5 transition-colors duration-150"
+              style={{ color: "var(--accent)" }}
             >
               View work
-              <ArrowDown size={15} />
+              <span
+                className="transition-transform duration-150 group-hover:translate-y-0.5"
+                aria-hidden
+              >
+                ↓
+              </span>
             </a>
             <a
               href="mailto:francisreubenrbtech25@rvu.edu.in"
-              className="px-6 py-3 font-medium text-sm rounded-lg transition-all duration-200"
-              style={{
-                background: "var(--surface)",
-                color: "var(--text-primary)",
-                border: "1px solid var(--border-default)",
-              }}
+              className="font-medium text-sm transition-colors duration-150"
+              style={{ color: "var(--ink-mid)" }}
             >
-              Get in touch
+              francisreubenrbtech25@rvu.edu.in
             </a>
           </motion.div>
         </motion.div>

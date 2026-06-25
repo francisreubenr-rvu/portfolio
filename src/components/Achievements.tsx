@@ -144,7 +144,7 @@ export default function Achievements() {
                     <span
                       className="font-mono text-xs shrink-0 px-2 py-0.5 rounded"
                       style={{
-                        background: "rgba(245,158,11,0.1)",
+                        background: "var(--amber-dim)",
                         color: "var(--amber)",
                       }}
                     >

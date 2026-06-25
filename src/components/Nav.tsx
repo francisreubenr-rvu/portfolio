@@ -40,7 +40,7 @@ export default function Nav() {
     <nav
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
-        background: scrolled ? "rgba(8,8,8,0.92)" : "transparent",
+        background: scrolled ? "rgba(244,240,232,0.94)" : "transparent",
         backdropFilter: scrolled ? "blur(12px)" : "none",
         borderBottom: scrolled ? "1px solid var(--border-subtle)" : "none",
       }}

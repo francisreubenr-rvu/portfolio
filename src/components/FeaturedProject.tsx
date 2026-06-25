@@ -6,11 +6,11 @@ import { Badge } from "@/components/ui/badge";
 import type { Project } from "@/data/projects";
 
 const domainColors: Record<string, string> = {
-  "ml-ai": "#a78bfa",
-  security: "#f87171",
-  systems: "#fb923c",
-  fullstack: "#4ade80",
-  research: "#facc15",
+  "ml-ai":    "oklch(0.40 0.14 285)",   /* deep indigo-violet */
+  security:   "oklch(0.48 0.18 28)",    /* deep vermillion */
+  systems:    "oklch(0.52 0.13 50)",    /* deep sienna-amber */
+  fullstack:  "oklch(0.44 0.11 148)",   /* deep forest green */
+  research:   "oklch(0.50 0.12 80)",    /* deep ochre */
 };
 
 interface Props {

@@ -4,23 +4,41 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── Design tokens ───────────────────────────────────────────────────── */
+/* ── Design tokens — ink on paper ───────────────────────────────────── */
 :root {
-  --cyan: #22d3ee;
-  --cyan-dim: rgba(34, 211, 238, 0.12);
-  --amber: #f59e0b;
-  --bg: #080808;
-  --surface: #111111;
-  --surface-2: #1a1a1a;
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-default: rgba(255, 255, 255, 0.10);
-  --border-strong: rgba(255, 255, 255, 0.18);
-  --text-primary: #f0f0f0;
-  --text-secondary: #9a9a9a;
-  --text-muted: #555555;
+  /* Palette */
+  --bg:            #f4f0e8;                    /* warm paper */
+  --surface:       #faf8f3;                    /* card lift */
+  --surface-2:     #ebe7db;                    /* secondary / nested */
+  --ink:           #0e0c09;                    /* near-black ink */
+  --ink-mid:       #4a4540;                    /* body / secondary */
+  --ink-faint:     #9a9188;                    /* muted / labels */
+  --ink-ghost:     #ccc8be;                    /* disabled / decorative */
+  --rule:          rgba(14, 12, 9, 0.10);      /* horizontal rules, borders */
+  --rule-strong:   rgba(14, 12, 9, 0.20);
+
+  /* Accent — deep vermillion */
+  --accent:        #c94a2b;
+  --accent-dim:    rgba(201, 74, 43, 0.09);
+  --accent-mid:    rgba(201, 74, 43, 0.18);
+
+  /* Competition / achievements amber */
+  --amber:         #92600a;
+  --amber-dim:     rgba(146, 96, 10, 0.10);
+
+  /* Aliases — these are what components reference as var(--cyan) etc. */
+  /* Keeping variable names so components need zero edits. */
+  --cyan:          var(--accent);
+  --cyan-dim:      var(--accent-dim);
+  --text-primary:  var(--ink);
+  --text-secondary: var(--ink-mid);
+  --text-muted:    var(--ink-faint);
+  --border-subtle: var(--rule);
+  --border-default: rgba(14, 12, 9, 0.13);
+  --border-strong: var(--rule-strong);
 }
 
-/* ── Shadcn overrides (dark editorial) ──────────────────────────────── */
+/* ── Shadcn token overrides ──────────────────────────────────────────── */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -44,25 +62,25 @@
 }
 
 :root {
-  --background: #080808;
-  --foreground: #f0f0f0;
-  --card: #111111;
-  --card-foreground: #f0f0f0;
-  --primary: #22d3ee;
-  --primary-foreground: #080808;
-  --secondary: #1a1a1a;
-  --secondary-foreground: #f0f0f0;
-  --muted: #1a1a1a;
-  --muted-foreground: #9a9a9a;
-  --accent: #1a1a1a;
-  --accent-foreground: #f0f0f0;
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.08);
-  --ring: rgba(34, 211, 238, 0.4);
+  --background: #f4f0e8;
+  --foreground: #0e0c09;
+  --card: #faf8f3;
+  --card-foreground: #0e0c09;
+  --primary: #c94a2b;
+  --primary-foreground: #faf8f3;
+  --secondary: #ebe7db;
+  --secondary-foreground: #0e0c09;
+  --muted: #ebe7db;
+  --muted-foreground: #9a9188;
+  --accent: #ebe7db;
+  --accent-foreground: #0e0c09;
+  --border: rgba(14, 12, 9, 0.10);
+  --input: rgba(14, 12, 9, 0.10);
+  --ring: rgba(201, 74, 43, 0.35);
   --radius: 0.5rem;
-  --popover: #111111;
-  --popover-foreground: #f0f0f0;
-  --destructive: oklch(0.704 0.191 22.216);
+  --popover: #faf8f3;
+  --popover-foreground: #0e0c09;
+  --destructive: oklch(0.577 0.245 27.325);
 }
 
 /* ── Base ────────────────────────────────────────────────────────────── */
@@ -80,14 +98,14 @@
 
   body {
     background: var(--bg);
-    color: var(--text-primary);
+    color: var(--ink);
     @apply font-sans;
     overflow-x: hidden;
   }
 
   ::selection {
-    background: var(--cyan-dim);
-    color: var(--cyan);
+    background: var(--accent-dim);
+    color: var(--accent);
   }
 }
 
@@ -123,7 +141,7 @@
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--ink-faint);
   }
 
   .label-mono-accent {
@@ -132,18 +150,24 @@
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--cyan);
+    color: var(--accent);
   }
 }
 
-/* ── Dot grid hero background ────────────────────────────────────────── */
+/* ── Very faint dot grid (dark on paper) ────────────────────────────── */
 .hero-grid {
   background-image: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.035) 1px,
+    rgba(14, 12, 9, 0.05) 1px,
     transparent 1px
   );
   background-size: 32px 32px;
+}
+
+/* ── Thin horizontal rule ────────────────────────────────────────────── */
+.hr-ink {
+  border: none;
+  border-top: 1px solid var(--rule);
 }
 
 /* ── Scrollbar ───────────────────────────────────────────────────────── */
@@ -154,7 +178,7 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(14, 12, 9, 0.12);
   border-radius: 2px;
 }
 
