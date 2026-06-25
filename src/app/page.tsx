@@ -1,39 +1,27 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
+import Marquee from "@/components/Marquee";
 import Projects from "@/components/Projects";
 import TechStack from "@/components/TechStack";
 import Achievements from "@/components/Achievements";
 import Contact from "@/components/Contact";
+import Cursor from "@/components/Cursor";
+import ScrollProgress from "@/components/ScrollProgress";
 
 export default function Home() {
   return (
-    <>
+    <div id="fr-site">
+      <ScrollProgress />
+      <Cursor />
       <Nav />
       <main>
         <Hero />
-
-        <div
-          className="max-w-7xl mx-auto px-6 md:px-10"
-          style={{ height: "1px", background: "var(--border-subtle)" }}
-        />
-
+        <Marquee />
         <Projects />
-
-        <div
-          className="max-w-7xl mx-auto px-6 md:px-10"
-          style={{ height: "1px", background: "var(--border-subtle)" }}
-        />
-
         <TechStack />
-
-        <div
-          className="max-w-7xl mx-auto px-6 md:px-10"
-          style={{ height: "1px", background: "var(--border-subtle)" }}
-        />
-
         <Achievements />
       </main>
       <Contact />
-    </>
+    </div>
   );
 }

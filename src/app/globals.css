@@ -1,93 +1,31 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── Design tokens — ink on paper ───────────────────────────────────── */
 :root {
-  /* Palette */
-  --bg:            #f4f0e8;                    /* warm paper */
-  --surface:       #faf8f3;                    /* card lift */
-  --surface-2:     #ebe7db;                    /* secondary / nested */
-  --ink:           #0e0c09;                    /* near-black ink */
-  --ink-mid:       #4a4540;                    /* body / secondary */
-  --ink-faint:     #9a9188;                    /* muted / labels */
-  --ink-ghost:     #ccc8be;                    /* disabled / decorative */
-  --rule:          rgba(14, 12, 9, 0.10);      /* horizontal rules, borders */
-  --rule-strong:   rgba(14, 12, 9, 0.20);
+  --bg:            #0c0b0a;
+  --surface:       rgba(244,240,232,0.03);
+  --surface-hover: rgba(244,240,232,0.05);
+  --ink:           #f4f0e8;
+  --ink-mid:       #a79e90;
+  --ink-faint:     #6f685d;
+  --accent:        #e85c3a;
+  --accent-dim:    rgba(232,92,58,0.1);
+  --accent-mid:    rgba(232,92,58,0.25);
+  --border:        rgba(244,240,232,0.08);
+  --border-mid:    rgba(244,240,232,0.12);
 
-  /* Accent — deep vermillion */
-  --accent:        #c94a2b;
-  --accent-dim:    rgba(201, 74, 43, 0.09);
-  --accent-mid:    rgba(201, 74, 43, 0.18);
-
-  /* Competition / achievements amber */
-  --amber:         #92600a;
-  --amber-dim:     rgba(146, 96, 10, 0.10);
-
-  /* Aliases — these are what components reference as var(--cyan) etc. */
-  /* Keeping variable names so components need zero edits. */
-  --cyan:          var(--accent);
-  --cyan-dim:      var(--accent-dim);
-  --text-primary:  var(--ink);
-  --text-secondary: var(--ink-mid);
-  --text-muted:    var(--ink-faint);
-  --border-subtle: var(--rule);
-  --border-default: rgba(14, 12, 9, 0.13);
-  --border-strong: var(--rule-strong);
+  /* domain accent colors */
+  --c-ml:       #8b7bff;
+  --c-security: #ff6a4d;
+  --c-systems:  #e0a93f;
+  --c-fullstack:#46c08a;
+  --c-research: #d8b94a;
+  --c-amber:    #d8a23f;
 }
 
-/* ── Shadcn token overrides ──────────────────────────────────────────── */
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
-  --font-heading: var(--font-heading);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-}
-
-:root {
-  --background: #f4f0e8;
-  --foreground: #0e0c09;
-  --card: #faf8f3;
-  --card-foreground: #0e0c09;
-  --primary: #c94a2b;
-  --primary-foreground: #faf8f3;
-  --secondary: #ebe7db;
-  --secondary-foreground: #0e0c09;
-  --muted: #ebe7db;
-  --muted-foreground: #9a9188;
-  --accent: #ebe7db;
-  --accent-foreground: #0e0c09;
-  --border: rgba(14, 12, 9, 0.10);
-  --input: rgba(14, 12, 9, 0.10);
-  --ring: rgba(201, 74, 43, 0.35);
-  --radius: 0.5rem;
-  --popover: #faf8f3;
-  --popover-foreground: #0e0c09;
-  --destructive: oklch(0.577 0.245 27.325);
-}
-
-/* ── Base ────────────────────────────────────────────────────────────── */
 @layer base {
-  * {
-    @apply border-border;
-  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
   html {
     font-size: 16px;
@@ -99,94 +37,52 @@
   body {
     background: var(--bg);
     color: var(--ink);
-    @apply font-sans;
+    font-family: var(--font-sans, 'Inter', sans-serif);
     overflow-x: hidden;
   }
 
   ::selection {
-    background: var(--accent-dim);
-    color: var(--accent);
+    background: rgba(232,92,58,0.25);
+    color: #f4f0e8;
   }
+
+  ::-webkit-scrollbar { width: 0; height: 0; }
 }
 
-/* ── Typography scale ────────────────────────────────────────────────── */
 @layer utilities {
-  .display-xl {
-    font-family: var(--font-heading);
-    font-size: clamp(40px, 11vw, 140px);
-    font-weight: 800;
-    line-height: 0.9;
-    letter-spacing: -0.04em;
-  }
-
-  .display-lg {
-    font-family: var(--font-heading);
-    font-size: clamp(40px, 6vw, 80px);
-    font-weight: 800;
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-  }
-
-  .display-md {
-    font-family: var(--font-heading);
-    font-size: clamp(28px, 4vw, 48px);
-    font-weight: 700;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-  }
+  .font-heading { font-family: var(--font-heading, 'Syne', sans-serif); }
+  .font-mono    { font-family: var(--font-mono, 'JetBrains Mono', monospace); }
 
   .label-mono {
-    font-family: var(--font-mono);
+    font-family: var(--font-mono, monospace);
     font-size: 11px;
     font-weight: 500;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--ink-faint);
   }
 
-  .label-mono-accent {
-    font-family: var(--font-mono);
+  .label-accent {
+    font-family: var(--font-mono, monospace);
     font-size: 11px;
     font-weight: 500;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--accent);
   }
 }
 
-/* ── Very faint dot grid (dark on paper) ────────────────────────────── */
-.hero-grid {
-  background-image: radial-gradient(
-    circle,
-    rgba(14, 12, 9, 0.05) 1px,
-    transparent 1px
-  );
-  background-size: 32px 32px;
+/* keyframes */
+@keyframes fr-marq        { to   { transform: translateX(-50%); } }
+@keyframes fr-scrolldot   { 0%   { transform: translateY(0);   opacity: 0; }
+                            30%  { opacity: 1; }
+                            100% { transform: translateY(30px); opacity: 0; } }
+
+/* cursor hide on touch */
+@media (hover: hover) and (pointer: fine) {
+  #fr-site, #fr-site a, #fr-site button { cursor: none; }
 }
 
-/* ── Thin horizontal rule ────────────────────────────────────────────── */
-.hr-ink {
-  border: none;
-  border-top: 1px solid var(--rule);
-}
-
-/* ── Scrollbar ───────────────────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(14, 12, 9, 0.12);
-  border-radius: 2px;
-}
-
-/* ── Reduced motion ─────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+  * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
