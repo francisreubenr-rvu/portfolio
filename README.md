@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Francis Reuben R — Portfolio
 
-## Getting Started
+Personal portfolio website. Next.js 16 · Tailwind CSS v4 · shadcn/ui · Framer Motion.
+Static-exported for GitHub Pages.
 
-First, run the development server:
+---
+
+## Dev
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build      # → out/ (static export)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploy to GitHub Pages
 
-## Learn More
+**1. Set base path** (replace `portfolio` with your repo name):
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+NEXT_PUBLIC_BASE_PATH=/portfolio npm run build
+# or shorthand:
+npm run deploy:pages   # uses /portfolio — edit package.json if your repo name differs
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**2. Push the `out/` folder:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npx gh-pages -d out
+```
 
-## Deploy on Vercel
+**3. GitHub Settings → Pages → Source: `gh-pages` branch / root**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### GitHub Actions (`.github/workflows/deploy.yml`)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```yaml
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - run: npm ci
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /portfolio   # ← change to your repo name
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+```
+
+---
+
+## Project data
+
+Edit `src/data/projects.ts` to update projects, links, descriptions, and tier classifications.
+Replace all `"#"` link placeholders with real GitHub/demo URLs.
+
+## Structure
+
+```
+src/
+  app/
+    globals.css       design tokens, typography, base styles
+    layout.tsx        fonts (Syne + Inter + JetBrains Mono), metadata
+    page.tsx          page composition
+  components/
+    Nav.tsx           scroll-aware navigation
+    Hero.tsx          name, stats, CTA
+    Projects.tsx      filterable grid (featured / standard / compact)
+    FeaturedProject.tsx  large cards
+    ProjectCard.tsx      medium cards
+    CompactProject.tsx   dense list rows
+    TechStack.tsx     grouped skill display
+    Achievements.tsx  academic record + competition history
+    Contact.tsx       footer, email, social links
+  data/
+    projects.ts       all project metadata with scores and tiers
+PROJECTS.md           full project inventory and scoring breakdown
+```
