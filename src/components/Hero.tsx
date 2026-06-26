@@ -157,7 +157,7 @@ export default function Hero() {
       </div>
 
       {/* ── Main content ────────────────────────────────────────── */}
-      <div ref={innerRef} style={{ position: "relative", zIndex: 3, maxWidth: 1280, margin: "0 auto", width: "100%", willChange: "transform, opacity" }}>
+      <div ref={innerRef} style={{ position: "relative", zIndex: 3, maxWidth: 1280, margin: 0, width: "100%", willChange: "transform, opacity" }}>
 
         {/* Availability badge — visible on all sizes */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: "clamp(16px,2vh,24px)" }}>
@@ -178,8 +178,8 @@ export default function Hero() {
         {/* ── Name — display font, stacked ──────────────────────── */}
         <h1 style={{
           fontFamily: "'Syne', sans-serif", fontWeight: 800,
-          fontSize: "clamp(64px,15vw,260px)", lineHeight: 0.85,
-          letterSpacing: "-0.03em", margin: 0, color: "#f4f0e8",
+          fontSize: "clamp(52px,13.5vw,200px)", lineHeight: 0.82,
+          letterSpacing: "-0.045em", margin: 0, color: "#f4f0e8",
           textShadow: "0 0 80px rgba(232,92,58,0.35), 0 0 160px rgba(232,92,58,0.15), 0 4px 30px rgba(0,0,0,0.5)",
         }}>
           <span data-scramble="FRANCIS" style={{ display: "block", whiteSpace: "nowrap" }}>FRANCIS</span>
