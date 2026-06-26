@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Syne, Inter, JetBrains_Mono } from "next/font/google";
+import { Syne, Inter, JetBrains_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
 const syne = Syne({
@@ -20,6 +20,13 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
+  display: "swap",
+});
+
+const playfairDisplay = Playfair_Display({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: ["700", "800", "900"],
   display: "swap",
 });
 
@@ -54,7 +61,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${syne.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
+      className={`${syne.variable} ${inter.variable} ${jetbrainsMono.variable} ${playfairDisplay.variable} antialiased`}
     >
       <body>{children}</body>
     </html>

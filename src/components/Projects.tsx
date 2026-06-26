@@ -185,8 +185,8 @@ function FeaturedCard({ project: p, num }: { project: Project; num: number }) {
   );
 }
 
-// ── Standard grid ────────────────────────────────────────────────────────────
-function StandardCard({ project: p }: { project: Project }) {
+// ── Standard grid (editorial layout) ────────────────────────────────────────
+function StandardCard({ project: p, span2 }: { project: Project; span2: boolean }) {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -197,12 +197,14 @@ function StandardCard({ project: p }: { project: Project }) {
       el.style.background = "rgba(244,240,232,0.05)";
       el.style.borderColor = "rgba(244,240,232,0.16)";
       el.style.transform = "translateY(-4px)";
+      el.style.boxShadow = "0 12px 40px rgba(0,0,0,0.3)";
       if (bar) bar.style.transform = "scaleY(1)";
     };
     const onLeave = () => {
       el.style.background = "rgba(244,240,232,0.025)";
       el.style.borderColor = "rgba(244,240,232,0.08)";
       el.style.transform = "translateY(0)";
+      el.style.boxShadow = "none";
       if (bar) bar.style.transform = "scaleY(0)";
     };
     el.addEventListener("mouseenter", onEnter);
@@ -216,24 +218,52 @@ function StandardCard({ project: p }: { project: Project }) {
       data-reveal="up"
       data-cursor
       style={{
-        position: "relative", background: "rgba(244,240,232,0.025)",
+        position: "relative",
+        gridColumn: span2 ? "span 2" : "span 1",
+        background: "rgba(244,240,232,0.025)",
         border: "1px solid rgba(244,240,232,0.08)", borderRadius: 6,
-        padding: 24, transition: "background .35s,border-color .35s,transform .35s",
+        transition: "background .35s, border-color .35s, transform .35s, box-shadow .35s",
         overflow: "hidden",
       }}
     >
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10, marginBottom: 14 }}>
-        <p style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "#6f685d", margin: 0 }}>{p.domains.join(" · ")}</p>
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "#6f685d" }}>{p.year}</span>
+      {/* Screenshot placeholder — wide cards only */}
+      {span2 && (
+        <div style={{
+          height: 140,
+          background: `linear-gradient(135deg, rgba(244,240,232,0.02) 0%, ${domainColors[p.domain] ?? "#e85c3a"}08 100%)`,
+          borderBottom: "1px solid rgba(244,240,232,0.06)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+        }}>
+          <span style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: "clamp(48px,6vw,80px)", color: "rgba(244,240,232,0.04)", letterSpacing: "-0.02em" }}>
+            {p.name}
+          </span>
+        </div>
+      )}
+
+      <div style={{ padding: span2 ? "clamp(20px,2.4vw,32px)" : 24 }}>
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10, marginBottom: 14 }}>
+          <p style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: domainColors[p.domain] ?? "#6f685d", margin: 0 }}>{p.domains.join(" · ")}</p>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "#6f685d" }}>{p.year}</span>
+        </div>
+        <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: span2 ? "clamp(20px,2vw,26px)" : 22, letterSpacing: "-0.01em", margin: "0 0 10px", color: "#f4f0e8" }}>{p.name}</h3>
+        <p style={{ fontSize: 13, lineHeight: 1.6, color: "#a79e90", margin: "0 0 18px", minHeight: span2 ? "auto" : 42 }}>{p.tagline}</p>
+
+        {span2 && p.metrics && (
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 16 }}>
+            {p.metrics.slice(0, 3).map(m => (
+              <span key={m} style={{ fontFamily: "var(--font-mono)", fontSize: 10, padding: "4px 8px", borderRadius: 3, color: domainColors[p.domain] ?? "#e85c3a", background: `${domainColors[p.domain] ?? "#e85c3a"}12`, border: `1px solid ${domainColors[p.domain] ?? "#e85c3a"}30` }}>{m}</span>
+            ))}
+          </div>
+        )}
+
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+          {p.tech.slice(0, span2 ? 6 : 4).map(t => (
+            <span key={t} style={{ fontFamily: "var(--font-mono)", fontSize: 10, padding: "3px 7px", borderRadius: 3, color: "#6f685d", border: "1px solid rgba(244,240,232,0.1)" }}>{t}</span>
+          ))}
+        </div>
       </div>
-      <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 22, letterSpacing: "-0.01em", margin: "0 0 10px", color: "#f4f0e8" }}>{p.name}</h3>
-      <p style={{ fontSize: 13, lineHeight: 1.6, color: "#a79e90", margin: "0 0 18px", minHeight: 42 }}>{p.tagline}</p>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-        {p.tech.slice(0, 4).map(t => (
-          <span key={t} style={{ fontFamily: "var(--font-mono)", fontSize: 10, padding: "3px 7px", borderRadius: 3, color: "#6f685d", border: "1px solid rgba(244,240,232,0.1)" }}>{t}</span>
-        ))}
-      </div>
-      <div className="card-bar" style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 2, background: "#e85c3a", transform: "scaleY(0)", transformOrigin: "50% 0", transition: "transform .35s cubic-bezier(.22,1,.36,1)" }} />
+
+      <div className="card-bar" style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 2, background: domainColors[p.domain] ?? "#e85c3a", transform: "scaleY(0)", transformOrigin: "50% 0", transition: "transform .35s cubic-bezier(.22,1,.36,1)" }} />
     </article>
   );
 }
@@ -310,9 +340,11 @@ export default function Projects() {
             </p>
           </div>
 
-          {/* standard grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: "clamp(12px,1.4vw,18px)" }}>
-            {standardProjects.map(p => <StandardCard key={p.id} project={p} />)}
+          {/* editorial grid */}
+          <div className="std-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "clamp(12px,1.4vw,18px)" }}>
+            {standardProjects.map((p, i) => (
+              <StandardCard key={p.id} project={p} span2={i % 4 === 0} />
+            ))}
           </div>
 
           {/* compact list */}

@@ -5,87 +5,14 @@ const DOMAINS = ["AI / ML", "Embedded & IoT", "Cybersecurity", "Full-Stack Web"]
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#@%&$/";
 
 export default function Hero() {
-  const canvasRef   = useRef<HTMLCanvasElement>(null);
   const innerRef    = useRef<HTMLDivElement>(null);
   const rotatorRef  = useRef<HTMLSpanElement>(null);
-  const mouseRef    = useRef({ x: -999, y: -999 });
-  const rafRef      = useRef(0);
-
-  // Canvas particles
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const hero   = canvas?.parentElement;
-    if (!canvas || !hero) return;
-    const ctx  = canvas.getContext("2d")!;
-    const DPR  = Math.min(window.devicePixelRatio || 1, 2);
-    let w = 0, h = 0;
-    type P = { x: number; y: number; vx: number; vy: number };
-    let parts: P[] = [];
-
-    const resize = () => {
-      w = hero.clientWidth; h = hero.clientHeight;
-      canvas.width  = w * DPR; canvas.height = h * DPR;
-      canvas.style.width = w + "px"; canvas.style.height = h + "px";
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      const count = Math.max(28, Math.min(96, Math.floor(w * h / 15000)));
-      parts = Array.from({ length: count }, () => ({
-        x: Math.random() * w, y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
-      }));
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const draw = () => {
-      ctx.clearRect(0, 0, w, h);
-      const r = hero.getBoundingClientRect();
-      const m = { x: mouseRef.current.x - r.left, y: mouseRef.current.y - r.top };
-      for (const p of parts) {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > w) p.vx *= -1;
-        if (p.y < 0 || p.y > h) p.vy *= -1;
-        const dx = p.x - m.x, dy = p.y - m.y, d = Math.hypot(dx, dy);
-        if (d < 150 && d > 0.1) { const f = (150 - d) / 150 * 1.6; p.x += dx / d * f; p.y += dy / d * f; }
-      }
-      for (let i = 0; i < parts.length; i++) {
-        for (let j = i + 1; j < parts.length; j++) {
-          const a = parts[i], b = parts[j];
-          const dx = a.x - b.x, dy = a.y - b.y, d = Math.hypot(dx, dy);
-          if (d < 128) {
-            ctx.strokeStyle = `rgba(244,240,232,${(1 - d / 128) * 0.13})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-          }
-        }
-      }
-      for (const p of parts) {
-        const near = Math.hypot(p.x - m.x, p.y - m.y) < 150;
-        ctx.fillStyle = near ? "rgba(232,92,58,0.95)" : "rgba(244,240,232,0.45)";
-        ctx.beginPath(); ctx.arc(p.x, p.y, near ? 2.4 : 1.4, 0, 6.3); ctx.fill();
-      }
-      rafRef.current = requestAnimationFrame(draw);
-    };
-    draw();
-
-    return () => {
-      cancelAnimationFrame(rafRef.current);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-
-  // Mouse tracking for canvas
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => { mouseRef.current.x = e.clientX; mouseRef.current.y = e.clientY; };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, []);
 
   // Parallax on scroll
   useEffect(() => {
     const onScroll = () => {
       const el = innerRef.current;
-      const cv = canvasRef.current;
-      if (!el || !cv) return;
+      if (!el) return;
       const vh = window.innerHeight;
       const y  = window.scrollY;
       if (y < vh) {
@@ -93,7 +20,6 @@ export default function Hero() {
         const mob = window.innerWidth < 768;
         el.style.transform = `translateY(${p * (mob ? 50 : 130)}px)`;
         el.style.opacity   = String(Math.max(0, 1 - p * (mob ? 0.8 : 1.15)));
-        cv.style.transform = `translateY(${y * (mob ? 0.12 : 0.28)}px)`;
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -135,7 +61,7 @@ export default function Hero() {
       Array.from(text).forEach(ch => {
         const s = document.createElement("span");
         s.style.cssText = "display:inline-block;opacity:0;will-change:opacity;";
-        s.textContent = ch === " " ? " " : ch;
+        s.textContent = ch === " " ? "\u00a0" : ch;
         t.appendChild(s);
         const idx = gi++;
         if (ch === " ") { s.style.opacity = "1"; return; }
@@ -187,10 +113,26 @@ export default function Hero() {
         overflow: "hidden",
       }}
     >
-      {/* canvas */}
-      <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, zIndex: 0 }} />
+      {/* ── Atmospheric backdrop ────────────────────────────────── */}
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 0,
+        background: `
+          radial-gradient(ellipse 80% 60% at 70% 85%, rgba(232,92,58,0.20) 0%, transparent 55%),
+          radial-gradient(ellipse 50% 45% at 25% 75%, rgba(212,168,67,0.10) 0%, transparent 50%),
+          radial-gradient(ellipse 90% 70% at 50% 50%, rgba(244,240,232,0.02) 0%, transparent 70%)
+        `,
+      }} />
 
-      {/* dot grid */}
+      {/* ── Photo placeholder — swap with <Image> for real photo ── */}
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 1,
+        background: `
+          linear-gradient(180deg, transparent 30%, rgba(12,11,10,0.85) 100%),
+          radial-gradient(ellipse 45% 70% at 65% 45%, rgba(232,92,58,0.06) 0%, transparent 70%)
+        `,
+      }} />
+
+      {/* ── Dot grid ────────────────────────────────────────────── */}
       <div style={{
         position: "absolute", inset: 0, zIndex: 1,
         backgroundImage: "radial-gradient(circle,rgba(244,240,232,0.05) 1px,transparent 1px)",
@@ -199,30 +141,46 @@ export default function Hero() {
         maskImage: "radial-gradient(ellipse 80% 70% at 50% 40%,#000 35%,transparent 80%)",
       }} />
 
-      {/* glow */}
-      <div style={{
-        position: "absolute", inset: 0, zIndex: 1,
-        background: "radial-gradient(ellipse 70% 50% at 50% 120%,rgba(232,92,58,0.12),transparent 70%)",
-      }} />
-
-      {/* corner meta — hidden on mobile */}
+      {/* ── Corner meta — hidden on mobile ──────────────────────── */}
       <div className="hero-meta" style={{ position: "absolute", top: 84, left: "clamp(20px,4vw,52px)", zIndex: 3, fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#6f685d" }}>
         Portfolio — 2025
       </div>
       <div className="hero-meta" style={{ position: "absolute", top: 84, right: "clamp(20px,4vw,52px)", zIndex: 3, textAlign: "right", fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#6f685d", lineHeight: 1.7 }}>
-        Bengaluru, IN<br /><span style={{ color: "#e85c3a" }}>●</span> Available for work
+        Bengaluru, IN<br />
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 6, marginTop: 4 }}>
+          <span style={{
+            width: 7, height: 7, borderRadius: "50%", background: "#22c55e",
+            animation: "fr-pulse 2s ease-in-out infinite",
+            boxShadow: "0 0 8px rgba(34,197,94,0.5)",
+          }} />
+          Available for work
+        </span>
       </div>
 
-      {/* main content */}
+      {/* ── Main content ────────────────────────────────────────── */}
       <div ref={innerRef} style={{ position: "relative", zIndex: 3, maxWidth: 1280, margin: "0 auto", width: "100%", willChange: "transform, opacity" }}>
-        <p style={{ fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "#e85c3a", marginBottom: "clamp(20px,3vh,36px)" }}>
+
+        {/* Availability badge — visible on all sizes */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: "clamp(16px,2vh,24px)" }}>
+          <span style={{
+            width: 8, height: 8, borderRadius: "50%", background: "#22c55e",
+            animation: "fr-pulse 2s ease-in-out infinite",
+            boxShadow: "0 0 8px rgba(34,197,94,0.5)",
+          }} />
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#22c55e" }}>
+            Open to work
+          </span>
+        </div>
+
+        <p style={{ fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "#e85c3a", marginBottom: "clamp(16px,2.5vh,32px)" }}>
           1st Year · CS Engineering · RV University
         </p>
 
+        {/* ── Name — display font, stacked ──────────────────────── */}
         <h1 style={{
-          fontFamily: "var(--font-heading)", fontWeight: 800,
-          fontSize: "clamp(52px,13.5vw,228px)", lineHeight: 0.82,
-          letterSpacing: "-0.045em", margin: 0, color: "#f4f0e8",
+          fontFamily: "var(--font-display)", fontWeight: 800,
+          fontSize: "clamp(64px,15vw,260px)", lineHeight: 0.85,
+          letterSpacing: "-0.03em", margin: 0, color: "#f4f0e8",
         }}>
           <span data-scramble="FRANCIS" style={{ display: "block", whiteSpace: "nowrap" }}>FRANCIS</span>
           <span style={{ display: "block", whiteSpace: "nowrap" }}>
@@ -235,7 +193,7 @@ export default function Hero() {
           justifyContent: "space-between", gap: 32,
           marginTop: "clamp(28px,4vh,48px)",
         }}>
-          {/* domain rotator */}
+          {/* ── Domain rotator ─────────────────────────────────── */}
           <div style={{ display: "flex", alignItems: "center", gap: 14, fontSize: "clamp(15px,1.5vw,19px)", color: "#a79e90", fontWeight: 500 }}>
             <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "#6f685d", textTransform: "uppercase", letterSpacing: "0.12em" }}>Building in</span>
             <span
@@ -246,16 +204,32 @@ export default function Hero() {
             </span>
           </div>
 
-          {/* stats — 2×2 grid on mobile */}
-          <div className="hero-stats" style={{ display: "flex", gap: "clamp(28px,4vw,56px)" }}>
+          {/* ── Glassmorphic stat cards ────────────────────────── */}
+          <div className="hero-stats" style={{ display: "flex", gap: "clamp(10px,1.6vw,16px)" }}>
             {[
               { val: "9.7",  dec: 1, label: "SGPA" },
               { val: "97.0", dec: 1, label: "ISC Board", suffix: "%" },
               { val: "22",   dec: 0, label: "Projects",  suffix: "+" },
               { val: "3",    dec: 0, label: "Natl. Champion", suffix: "×" },
             ].map(s => (
-              <div key={s.label}>
-                <div style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: "clamp(26px,3vw,40px)", color: "#f4f0e8", lineHeight: 1 }}>
+              <div
+                key={s.label}
+                className="glass-card"
+                style={{
+                  padding: "clamp(14px,2vw,22px) clamp(16px,2.4vw,28px)",
+                  minWidth: 90,
+                  transition: "border-color .3s, box-shadow .3s",
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = "rgba(232,92,58,0.3)";
+                  e.currentTarget.style.boxShadow = "0 0 24px rgba(232,92,58,0.12)";
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = "rgba(244,240,232,0.1)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                <div style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: "clamp(24px,2.8vw,36px)", color: "#f4f0e8", lineHeight: 1 }}>
                   <span data-count={s.val} data-dec={s.dec}>{s.val}</span>{s.suffix}
                 </div>
                 <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "#6f685d", marginTop: 6 }}>{s.label}</div>
@@ -265,7 +239,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* scroll indicator */}
+      {/* ── Scroll indicator ────────────────────────────────────── */}
       <div style={{ position: "absolute", bottom: 30, left: "50%", transform: "translateX(-50%)", zIndex: 3, display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
         <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#6f685d" }}>Scroll</span>
         <div style={{ position: "relative", width: 1, height: 40, background: "rgba(244,240,232,0.15)", overflow: "hidden" }}>
