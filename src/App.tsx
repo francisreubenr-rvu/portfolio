@@ -1,3 +1,4 @@
+import { Routes, Route } from "react-router-dom";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
@@ -8,7 +9,7 @@ import Contact from "@/components/Contact";
 import Cursor from "@/components/Cursor";
 import ScrollProgress from "@/components/ScrollProgress";
 
-export default function Home() {
+function Home() {
   return (
     <div id="fr-site">
       <ScrollProgress />
@@ -23,5 +24,13 @@ export default function Home() {
       </main>
       <Contact />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+    </Routes>
   );
 }

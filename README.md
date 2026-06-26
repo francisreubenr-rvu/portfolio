@@ -1,93 +1,85 @@
 # Francis Reuben R — Portfolio
 
-Personal portfolio website. Next.js 16 · Tailwind CSS v4 · shadcn/ui · Framer Motion.
-Static-exported for GitHub Pages.
+Personal portfolio website built with Vite, React, TypeScript, Tailwind CSS v4, and HashRouter for GitHub Pages deployment.
 
----
+## Stack
 
-## Dev
+- **Vite** — build tool
+- **React 19** — UI framework
+- **TypeScript** — type safety
+- **Tailwind CSS v4** — styling with `@theme` tokens
+- **React Router** — HashRouter for SPA routing on GitHub Pages
+- **Framer Motion** — restrained cinematic animations
+- **Lucide React** — icons
+
+## Project structure
+
+```
+src/
+  main.tsx          — entry point with HashRouter
+  App.tsx           — route definitions
+  index.css         — Tailwind import + design tokens + keyframes
+  components/
+    Nav.tsx         — scroll-aware glassmorphic nav
+    Hero.tsx        — parallax, scramble text, domain rotator, count-up stats
+    Marquee.tsx     — infinite scrolling domain marquee
+    Projects.tsx    — featured scroll + standard grid + compact list
+    TechStack.tsx   — grouped skills with proficiency bars
+    Achievements.tsx — academics + competitions
+    Contact.tsx     — footer with CTA and social links
+    Cursor.tsx      — custom cursor with magnetic hover
+    ScrollProgress.tsx — top progress bar
+  data/
+    projects.ts     — all project metadata with scores and tiers
+  lib/
+    utils.ts        — shadcn utility (cn)
+public/
+  favicon.svg
+  .nojekyll        — disables Jekyll processing on GitHub Pages
+```
+
+## Development
 
 ```bash
 npm install
-npm run dev        # http://localhost:3000
+npm run dev        # http://localhost:5173
 ```
 
 ## Build
 
 ```bash
-npm run build      # → out/ (static export)
+npm run build      # → dist/ (static export)
 ```
 
 ## Deploy to GitHub Pages
 
-**1. Set base path** (replace `portfolio` with your repo name):
-
-```bash
-NEXT_PUBLIC_BASE_PATH=/portfolio npm run build
-# or shorthand:
-npm run deploy:pages   # uses /portfolio — edit package.json if your repo name differs
-```
-
-**2. Push the `out/` folder:**
-
-```bash
-npx gh-pages -d out
-```
-
-**3. GitHub Settings → Pages → Source: `gh-pages` branch / root**
-
 ### GitHub Actions (`.github/workflows/deploy.yml`)
 
-```yaml
-name: Deploy to GitHub Pages
-on:
-  push:
-    branches: [main]
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: npm }
-      - run: npm ci
-      - run: npm run build
-        env:
-          NEXT_PUBLIC_BASE_PATH: /portfolio   # ← change to your repo name
-      - uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
+The included workflow builds and deploys automatically on every push to `main`.
+
+1. Go to **Settings → Pages** in your repository
+2. Set **Source** to "GitHub Actions"
+3. Push to `main` — the workflow will build and deploy
+
+### Manual deploy
+
+```bash
+npm run build
+npx gh-pages -d dist
 ```
 
----
+### Important: HashRouter
 
-## Project data
+This site uses `HashRouter` because GitHub Pages does not support SPA route fallback. All routes are relative (`./`) to work from any subdirectory.
 
-Edit `src/data/projects.ts` to update projects, links, descriptions, and tier classifications.
-Replace all `"#"` link placeholders with real GitHub/demo URLs.
+## Design direction
 
-## Structure
+- **Base**: near-black (`#0c0b0a`)
+- **Accent**: ember orange (`#e85c3a`)
+- **Typography**: Inter (body), Syne (headings), JetBrains Mono (labels)
+- **Motion**: parallax, scramble text, count-up, scroll-jack featured cards, hover glow, custom cursor
+- **Responsive**: mobile-optimized with native horizontal scroll for featured cards, 2×2 stat grid, collapsible nav
 
-```
-src/
-  app/
-    globals.css       design tokens, typography, base styles
-    layout.tsx        fonts (Syne + Inter + JetBrains Mono), metadata
-    page.tsx          page composition
-  components/
-    Nav.tsx           scroll-aware navigation
-    Hero.tsx          name, stats, CTA
-    Projects.tsx      filterable grid (featured / standard / compact)
-    FeaturedProject.tsx  large cards
-    ProjectCard.tsx      medium cards
-    CompactProject.tsx   dense list rows
-    TechStack.tsx     grouped skill display
-    Achievements.tsx  academic record + competition history
-    Contact.tsx       footer, email, social links
-  data/
-    projects.ts       all project metadata with scores and tiers
-PROJECTS.md           full project inventory and scoring breakdown
-```
+## Credits
+
+Design and code by Francis Reuben R.

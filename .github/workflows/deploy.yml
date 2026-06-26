@@ -31,14 +31,12 @@ jobs:
 
       - name: Build static export
         run: npm run build
-        env:
-          NEXT_PUBLIC_BASE_PATH: /portfolio
 
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./dist
 
       - name: Deploy to GitHub Pages
         id: deployment

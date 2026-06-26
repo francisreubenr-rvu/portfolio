@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useRef } from "react";
 import { featuredProjects, standardProjects, compactProjects } from "@/data/projects";
 import type { Project } from "@/data/projects";
@@ -111,7 +110,7 @@ function FeaturedScroll() {
             willChange: "transform",
           }}
         >
-          {featuredProjects.map((p, i) => (
+          {featuredProjects.map((p: Project, i: number) => (
             <FeaturedCard key={p.id} project={p} num={i + 1} />
           ))}
         </div>
@@ -171,14 +170,14 @@ function FeaturedCard({ project: p, num }: { project: Project; num: number }) {
 
       {p.metrics && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 20 }}>
-          {p.metrics.slice(0, 3).map(m => (
+          {p.metrics.slice(0, 3).map((m: string) => (
             <span key={m} style={{ fontFamily: "var(--font-mono)", fontSize: 10, padding: "5px 9px", borderRadius: 3, color: accent, background: `${accent}14`, border: `1px solid ${accent}40` }}>{m}</span>
           ))}
         </div>
       )}
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-        {p.tech.slice(0, 5).map(t => (
+        {p.tech.slice(0, 5).map((t: string) => (
           <span key={t} style={{ fontFamily: "var(--font-mono)", fontSize: 10, padding: "4px 8px", borderRadius: 3, color: "#6f685d", border: "1px solid rgba(244,240,232,0.1)" }}>{t}</span>
         ))}
       </div>
@@ -252,14 +251,14 @@ function StandardCard({ project: p, span2 }: { project: Project; span2: boolean 
 
         {span2 && p.metrics && (
           <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 16 }}>
-            {p.metrics.slice(0, 3).map(m => (
+            {p.metrics.slice(0, 3).map((m: string) => (
               <span key={m} style={{ fontFamily: "var(--font-mono)", fontSize: 10, padding: "4px 8px", borderRadius: 3, color: domainColors[p.domain] ?? "#e85c3a", background: `${domainColors[p.domain] ?? "#e85c3a"}12`, border: `1px solid ${domainColors[p.domain] ?? "#e85c3a"}30` }}>{m}</span>
             ))}
           </div>
         )}
 
         <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-          {p.tech.slice(0, span2 ? 6 : 4).map(t => (
+          {p.tech.slice(0, span2 ? 6 : 4).map((t: string) => (
             <span key={t} style={{ fontFamily: "var(--font-mono)", fontSize: 10, padding: "3px 7px", borderRadius: 3, color: "#6f685d", border: "1px solid rgba(244,240,232,0.1)" }}>{t}</span>
           ))}
         </div>
@@ -344,7 +343,7 @@ export default function Projects() {
 
           {/* editorial grid */}
           <div className="std-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "clamp(12px,1.4vw,18px)" }}>
-            {standardProjects.map((p, i) => (
+            {standardProjects.map((p: Project, i: number) => (
               <StandardCard key={p.id} project={p} span2={i % 4 === 0} />
             ))}
           </div>
@@ -354,7 +353,7 @@ export default function Projects() {
             Additional Work
           </p>
           <div style={{ borderTop: "1px solid rgba(244,240,232,0.08)" }}>
-            {compactProjects.map((p, i) => <CompactRow key={p.id} project={p} idx={i + 1} />)}
+            {compactProjects.map((p: Project, i: number) => <CompactRow key={p.id} project={p} idx={i + 1} />)}
           </div>
         </div>
       </div>

@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useRef } from "react";
 
 const DOMAINS = ["AI / ML", "Embedded & IoT", "Cybersecurity", "Full-Stack Web"];
@@ -123,7 +122,7 @@ export default function Hero() {
         `,
       }} />
 
-      {/* ── Photo placeholder — swap with <Image> for real photo ── */}
+      {/* ── Photo placeholder ── */}
       <div style={{
         position: "absolute", inset: 0, zIndex: 1,
         background: `
@@ -178,7 +177,7 @@ export default function Hero() {
 
         {/* ── Name — display font, stacked ──────────────────────── */}
         <h1 style={{
-          fontFamily: "var(--font-display)", fontWeight: 800,
+          fontFamily: "'Syne', sans-serif", fontWeight: 800,
           fontSize: "clamp(64px,15vw,260px)", lineHeight: 0.85,
           letterSpacing: "-0.03em", margin: 0, color: "#f4f0e8",
           textShadow: "0 0 80px rgba(232,92,58,0.35), 0 0 160px rgba(232,92,58,0.15), 0 4px 30px rgba(0,0,0,0.5)",

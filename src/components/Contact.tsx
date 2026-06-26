@@ -1,4 +1,3 @@
-"use client";
 import { Mail } from "lucide-react";
 
 function GithubIcon({ size = 18 }: { size?: number }) {
@@ -43,7 +42,7 @@ export default function Contact() {
             data-reveal="up"
             className="glow-text"
             style={{
-              fontFamily: "var(--font-display)", fontWeight: 800,
+              fontFamily: "'Syne', sans-serif", fontWeight: 800,
               fontSize: "clamp(48px,10vw,170px)", letterSpacing: "-0.035em",
               lineHeight: 0.88, margin: 0, color: "#f4f0e8",
             }}
