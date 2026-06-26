@@ -117,9 +117,9 @@ export default function Hero() {
       <div style={{
         position: "absolute", inset: 0, zIndex: 0,
         background: `
-          radial-gradient(ellipse 80% 60% at 70% 85%, rgba(232,92,58,0.20) 0%, transparent 55%),
-          radial-gradient(ellipse 50% 45% at 25% 75%, rgba(212,168,67,0.10) 0%, transparent 50%),
-          radial-gradient(ellipse 90% 70% at 50% 50%, rgba(244,240,232,0.02) 0%, transparent 70%)
+          radial-gradient(ellipse 80% 60% at 70% 85%, rgba(232,92,58,0.45) 0%, transparent 55%),
+          radial-gradient(ellipse 50% 45% at 25% 75%, rgba(212,168,67,0.25) 0%, transparent 50%),
+          radial-gradient(ellipse 90% 70% at 50% 50%, rgba(244,240,232,0.04) 0%, transparent 70%)
         `,
       }} />
 
@@ -181,6 +181,7 @@ export default function Hero() {
           fontFamily: "var(--font-display)", fontWeight: 800,
           fontSize: "clamp(64px,15vw,260px)", lineHeight: 0.85,
           letterSpacing: "-0.03em", margin: 0, color: "#f4f0e8",
+          textShadow: "0 0 80px rgba(232,92,58,0.35), 0 0 160px rgba(232,92,58,0.15), 0 4px 30px rgba(0,0,0,0.5)",
         }}>
           <span data-scramble="FRANCIS" style={{ display: "block", whiteSpace: "nowrap" }}>FRANCIS</span>
           <span style={{ display: "block", whiteSpace: "nowrap" }}>
@@ -218,15 +219,17 @@ export default function Hero() {
                 style={{
                   padding: "clamp(14px,2vw,22px) clamp(16px,2.4vw,28px)",
                   minWidth: 90,
+                  borderColor: "rgba(232,92,58,0.15)",
+                  boxShadow: "0 0 30px rgba(232,92,58,0.08), inset 0 1px 0 rgba(244,240,232,0.06)",
                   transition: "border-color .3s, box-shadow .3s",
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = "rgba(232,92,58,0.3)";
-                  e.currentTarget.style.boxShadow = "0 0 24px rgba(232,92,58,0.12)";
+                  e.currentTarget.style.borderColor = "rgba(232,92,58,0.4)";
+                  e.currentTarget.style.boxShadow = "0 0 40px rgba(232,92,58,0.2), inset 0 1px 0 rgba(244,240,232,0.08)";
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = "rgba(244,240,232,0.1)";
-                  e.currentTarget.style.boxShadow = "none";
+                  e.currentTarget.style.borderColor = "rgba(232,92,58,0.15)";
+                  e.currentTarget.style.boxShadow = "0 0 30px rgba(232,92,58,0.08), inset 0 1px 0 rgba(244,240,232,0.06)";
                 }}
               >
                 <div style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: "clamp(24px,2.8vw,36px)", color: "#f4f0e8", lineHeight: 1 }}>

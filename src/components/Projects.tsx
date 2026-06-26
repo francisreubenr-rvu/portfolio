@@ -151,7 +151,8 @@ function FeaturedCard({ project: p, num }: { project: Project; num: number }) {
         borderLeft: `3px solid ${accent}`,
         borderRadius: 6, padding: "clamp(24px,2.6vw,38px)",
         position: "relative", willChange: "transform",
-        transition: "transform .3s ease",
+        boxShadow: `0 0 40px ${accent}12, 0 8px 32px rgba(0,0,0,0.3)`,
+        transition: "transform .3s ease, box-shadow .3s ease",
       }}
     >
       {/* big number */}
@@ -197,7 +198,7 @@ function StandardCard({ project: p, span2 }: { project: Project; span2: boolean 
       el.style.background = "rgba(244,240,232,0.05)";
       el.style.borderColor = "rgba(244,240,232,0.16)";
       el.style.transform = "translateY(-4px)";
-      el.style.boxShadow = "0 12px 40px rgba(0,0,0,0.3)";
+      el.style.boxShadow = `0 12px 40px rgba(0,0,0,0.3), 0 0 30px ${domainColors[p.domain] ?? "#e85c3a"}15`;
       if (bar) bar.style.transform = "scaleY(1)";
     };
     const onLeave = () => {
@@ -222,6 +223,7 @@ function StandardCard({ project: p, span2 }: { project: Project; span2: boolean 
         gridColumn: span2 ? "span 2" : "span 1",
         background: "rgba(244,240,232,0.025)",
         border: "1px solid rgba(244,240,232,0.08)", borderRadius: 6,
+        boxShadow: "0 4px 24px rgba(0,0,0,0.2)",
         transition: "background .35s, border-color .35s, transform .35s, box-shadow .35s",
         overflow: "hidden",
       }}

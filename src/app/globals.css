@@ -84,21 +84,21 @@
     background: rgba(244,240,232,0.04);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(244,240,232,0.1);
+    border: 1px solid rgba(244,240,232,0.12);
     border-radius: 8px;
   }
 
   /* ── Glow effects ───────────────────────────────────────────────── */
   .glow-accent {
-    box-shadow: 0 0 40px rgba(232,92,58,0.15), 0 0 80px rgba(232,92,58,0.08);
+    box-shadow: 0 0 50px rgba(232,92,58,0.25), 0 0 100px rgba(232,92,58,0.12);
   }
 
   .glow-sm {
-    box-shadow: 0 0 20px rgba(232,92,58,0.12);
+    box-shadow: 0 0 30px rgba(232,92,58,0.2);
   }
 
   .glow-text {
-    text-shadow: 0 0 40px rgba(232,92,58,0.3), 0 0 80px rgba(232,92,58,0.15);
+    text-shadow: 0 0 60px rgba(232,92,58,0.45), 0 0 120px rgba(232,92,58,0.2);
   }
 
   /* ── Progress bars ──────────────────────────────────────────────── */
@@ -130,8 +130,8 @@
                             100% { transform: translateY(30px); opacity: 0; } }
 @keyframes fr-pulse       { 0%, 100% { opacity: 1; }
                             50%      { opacity: 0.4; } }
-@keyframes fr-glow        { 0%, 100% { box-shadow: 0 0 20px rgba(232,92,58,0.15); }
-                            50%      { box-shadow: 0 0 40px rgba(232,92,58,0.25); } }
+@keyframes fr-glow        { 0%, 100% { box-shadow: 0 0 30px rgba(232,92,58,0.25); }
+                            50%      { box-shadow: 0 0 60px rgba(232,92,58,0.4); } }
 
 /* cursor hide on touch */
 @media (hover: hover) and (pointer: fine) {
