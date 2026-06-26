@@ -90,9 +90,10 @@ export default function Hero() {
       const y  = window.scrollY;
       if (y < vh) {
         const p = y / vh;
-        el.style.transform = `translateY(${p * 130}px)`;
-        el.style.opacity   = String(Math.max(0, 1 - p * 1.15));
-        cv.style.transform = `translateY(${y * 0.28}px)`;
+        const mob = window.innerWidth < 768;
+        el.style.transform = `translateY(${p * (mob ? 50 : 130)}px)`;
+        el.style.opacity   = String(Math.max(0, 1 - p * (mob ? 0.8 : 1.15)));
+        cv.style.transform = `translateY(${y * (mob ? 0.12 : 0.28)}px)`;
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -204,11 +205,11 @@ export default function Hero() {
         background: "radial-gradient(ellipse 70% 50% at 50% 120%,rgba(232,92,58,0.12),transparent 70%)",
       }} />
 
-      {/* corner meta */}
-      <div style={{ position: "absolute", top: 84, left: "clamp(20px,4vw,52px)", zIndex: 3, fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#6f685d" }}>
+      {/* corner meta — hidden on mobile */}
+      <div className="hero-meta" style={{ position: "absolute", top: 84, left: "clamp(20px,4vw,52px)", zIndex: 3, fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#6f685d" }}>
         Portfolio — 2025
       </div>
-      <div style={{ position: "absolute", top: 84, right: "clamp(20px,4vw,52px)", zIndex: 3, textAlign: "right", fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#6f685d", lineHeight: 1.7 }}>
+      <div className="hero-meta" style={{ position: "absolute", top: 84, right: "clamp(20px,4vw,52px)", zIndex: 3, textAlign: "right", fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#6f685d", lineHeight: 1.7 }}>
         Bengaluru, IN<br /><span style={{ color: "#e85c3a" }}>●</span> Available for work
       </div>
 
@@ -245,8 +246,8 @@ export default function Hero() {
             </span>
           </div>
 
-          {/* stats */}
-          <div style={{ display: "flex", gap: "clamp(28px,4vw,56px)" }}>
+          {/* stats — 2×2 grid on mobile */}
+          <div className="hero-stats" style={{ display: "flex", gap: "clamp(28px,4vw,56px)" }}>
             {[
               { val: "9.7",  dec: 1, label: "SGPA" },
               { val: "97.0", dec: 1, label: "ISC Board", suffix: "%" },

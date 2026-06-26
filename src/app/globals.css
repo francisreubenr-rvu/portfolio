@@ -86,3 +86,52 @@
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* ── Mobile (< 768px) ──────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+
+  /* Hero: hide decorative corner labels */
+  .hero-meta { display: none !important; }
+
+  /* Hero: stats 2×2 grid instead of 4-item overflow row */
+  .hero-stats {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20px 24px !important;
+  }
+
+  /* Featured scroll: disable JS scroll-jack, enable native horizontal swipe */
+  .feat-pin    { position: static !important; height: auto !important; }
+  .feat-sticky {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+  .feat-label  { position: static !important; padding: 40px 20px 20px !important; }
+  .feat-progress { display: none !important; }
+  .feat-track {
+    transform: none !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding: 16px 20px 40px !important;
+    gap: 14px !important;
+  }
+  .feat-track::-webkit-scrollbar { display: none; }
+  .feat-card  {
+    width: min(82vw, 300px) !important;
+    scroll-snap-align: start !important;
+  }
+
+  /* Compact project rows: drop tagline + year on small screens */
+  .crow-tagline { display: none !important; }
+  .crow-year    { display: none !important; }
+
+  /* Tech stack: collapse 2-col label+pills to single column */
+  .tech-row {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+}

@@ -47,6 +47,7 @@ function FeaturedScroll() {
       const pin   = pinRef.current;
       const track = trackRef.current;
       if (!pin || !track) return;
+      if (window.innerWidth < 768) { pin.style.height = ""; return; }
       const extra = Math.max(0, track.scrollWidth - window.innerWidth + window.innerWidth * 0.06);
       extraRef.current = extra;
       pin.style.height = (window.innerHeight + extra) + "px";
@@ -56,6 +57,7 @@ function FeaturedScroll() {
 
     let tick = false;
     const onScroll = () => {
+      if (window.innerWidth < 768) return;
       if (tick) return;
       tick = true;
       requestAnimationFrame(() => {
@@ -78,10 +80,10 @@ function FeaturedScroll() {
   }, []);
 
   return (
-    <div ref={pinRef} style={{ position: "relative" }}>
-      <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", alignItems: "center", overflow: "hidden" }}>
+    <div ref={pinRef} className="feat-pin" style={{ position: "relative" }}>
+      <div className="feat-sticky" style={{ position: "sticky", top: 0, height: "100vh", display: "flex", alignItems: "center", overflow: "hidden" }}>
         {/* section label */}
-        <div style={{ position: "absolute", top: "clamp(56px,9vh,96px)", left: "clamp(20px,4vw,52px)", zIndex: 5 }}>
+        <div className="feat-label" style={{ position: "absolute", top: "clamp(56px,9vh,96px)", left: "clamp(20px,4vw,52px)", zIndex: 5 }}>
           <p className="label-accent" style={{ marginBottom: 10 }}>Selected Work</p>
           <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: "clamp(28px,4vw,56px)", letterSpacing: "-0.03em", margin: 0, color: "#f4f0e8", lineHeight: 0.95 }}>
             Things I&apos;ve<br />shipped
@@ -89,7 +91,7 @@ function FeaturedScroll() {
         </div>
 
         {/* progress */}
-        <div style={{ position: "absolute", bottom: "clamp(40px,7vh,72px)", left: "clamp(20px,4vw,52px)", right: "clamp(20px,4vw,52px)", zIndex: 5, display: "flex", alignItems: "center", gap: 16 }}>
+        <div className="feat-progress" style={{ position: "absolute", bottom: "clamp(40px,7vh,72px)", left: "clamp(20px,4vw,52px)", right: "clamp(20px,4vw,52px)", zIndex: 5, display: "flex", alignItems: "center", gap: 16 }}>
           <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "#6f685d", letterSpacing: "0.1em" }}>FEATURED</span>
           <div style={{ flex: 1, height: 1, background: "rgba(244,240,232,0.1)", position: "relative" }}>
             <div ref={fillRef} style={{ position: "absolute", inset: 0, background: "#e85c3a", transform: "scaleX(0)", transformOrigin: "0 50%" }} />
@@ -100,6 +102,7 @@ function FeaturedScroll() {
         {/* card track */}
         <div
           ref={trackRef}
+          className="feat-track"
           style={{
             display: "flex", alignItems: "center",
             gap: "clamp(20px,3vw,40px)",
@@ -140,6 +143,7 @@ function FeaturedCard({ project: p, num }: { project: Project; num: number }) {
     <article
       ref={ref}
       data-cursor
+      className="feat-card"
       style={{
         flex: "0 0 auto", width: "clamp(300px,42vw,460px)",
         background: "rgba(244,240,232,0.03)",
@@ -277,8 +281,8 @@ function CompactRow({ project: p, idx }: { project: Project; idx: number }) {
     >
       <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "#6f685d", width: 28, flex: "0 0 auto" }}>{String(idx).padStart(2, "0")}</span>
       <span className="row-name" style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: "clamp(17px,2vw,24px)", color: "#f4f0e8", flex: "0 0 auto", minWidth: 140 }}>{p.name}</span>
-      <span style={{ fontSize: 13, color: "#6f685d", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.tagline}</span>
-      <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "#6f685d", flex: "0 0 auto" }}>{p.year}</span>
+      <span className="crow-tagline" style={{ fontSize: 13, color: "#6f685d", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.tagline}</span>
+      <span className="crow-year" style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "#6f685d", flex: "0 0 auto" }}>{p.year}</span>
       <span className="row-arrow" style={{ color: "#e85c3a", flex: "0 0 auto", fontSize: 14 }}>↗</span>
     </a>
   );

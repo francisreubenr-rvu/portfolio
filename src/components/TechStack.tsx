@@ -60,6 +60,7 @@ export default function TechStack() {
             <div
               key={g.label}
               data-reveal="up"
+              className="tech-row"
               style={{
                 display: "grid",
                 gridTemplateColumns: "minmax(120px,200px) 1fr",
